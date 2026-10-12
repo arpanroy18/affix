@@ -11,3 +11,11 @@ if(MSVC)
 else()
     add_compile_options(-Wall -Wextra -Wpedantic -O3)
 endif()
+
+# Platform specific source selection
+set(PLATFORM_SOURCES)
+if(APPLE)
+    list(APPEND PLATFORM_SOURCES src/platform/platform_darwin.cpp)
+elseif(UNIX AND NOT APPLE)
+    list(APPEND PLATFORM_SOURCES src/platform/platform_linux.cpp)
+endif()
