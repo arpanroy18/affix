@@ -33,4 +33,5 @@ add_library(affix
 )
 
 add_library(affix::affix ALIAS affix)
+
 add_library(corepilot::corepilot ALIAS affix) # Legacy alias
