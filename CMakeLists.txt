@@ -33,7 +33,6 @@ add_library(affix
 )
 
 add_library(affix::affix ALIAS affix)
-
 add_library(corepilot::corepilot ALIAS affix) # Legacy alias
 
 target_include_directories(affix
@@ -50,3 +49,23 @@ target_link_libraries(affix PUBLIC Threads::Threads)
 # CLI Tool
 add_executable(affix-cli tools/affix_cli.cpp)
 target_link_libraries(affix-cli PRIVATE affix::affix)
+
+# Unit Tests
+enable_testing()
+add_executable(affix-tests tests/main.cpp)
+target_link_libraries(affix-tests PRIVATE affix::affix)
+add_test(NAME AffixTests COMMAND affix-tests)
+
+# Benchmark Suite
+add_executable(affix-bench benchmarks/bench_contention.cpp)
+target_link_libraries(affix-bench PRIVATE affix::affix)
+
+# Install targets for standard distribution
+include(GNUInstallDirs)
+install(TARGETS affix affix-cli
+    EXPORT affixTargets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+install(DIRECTORY include/affix DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
