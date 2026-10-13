@@ -35,3 +35,18 @@ add_library(affix
 add_library(affix::affix ALIAS affix)
 
 add_library(corepilot::corepilot ALIAS affix) # Legacy alias
+
+target_include_directories(affix
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+find_package(Threads REQUIRED)
+target_link_libraries(affix PUBLIC Threads::Threads)
+
+# CLI Tool
+add_executable(affix-cli tools/affix_cli.cpp)
+target_link_libraries(affix-cli PRIVATE affix::affix)
