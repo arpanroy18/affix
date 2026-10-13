@@ -19,3 +19,18 @@ if(APPLE)
 elseif(UNIX AND NOT APPLE)
     list(APPEND PLATFORM_SOURCES src/platform/platform_linux.cpp)
 endif()
+
+# Core library
+add_library(affix
+    src/topology/topology.cpp
+    src/placement/placement.cpp
+    src/this_thread/this_thread.cpp
+    src/observability/observability.cpp
+    src/numa/numa.cpp
+    src/warmup/warmup.cpp
+    src/advisor/advisor.cpp
+    ${PLATFORM_SOURCES}
+)
+
+add_library(affix::affix ALIAS affix)
+add_library(corepilot::corepilot ALIAS affix) # Legacy alias
