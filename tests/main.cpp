@@ -154,3 +154,63 @@ TEST_CASE(workload_execution) {
     ASSERT_EQ(wl.session().sample_count(), 1);
 }
 
+TEST_CASE(realtime_priority_policy) {
+    auto policy = affix::Policy::pinned(0).with_realtime_fifo(70);
+    ASSERT_EQ(policy.sched_priority(), affix::SchedPriority::RealtimeFifo);
+    ASSERT_EQ(policy.priority_value(), 70);
+
+    affix::ScopedPlacement guard(policy);
+    ASSERT_TRUE(guard.applied());
+}
+
+TEST_CASE(isolated_core_policy) {
+    const auto& topo = affix::get_system_topology();
+    auto policy = affix::Policy::isolated_core();
+    auto resolved = policy.resolve(topo);
+    ASSERT_FALSE(resolved.empty());
+}
+
+TEST_CASE(numa_allocation_and_stl_allocator) {
+    void* raw = affix::numa::allocate(4096, 0);
+    ASSERT_NE(raw, nullptr);
+    affix::numa::free(raw, 4096);
+
+    std::vector<int, affix::numa::NumaAllocator<int>> vec(affix::numa::NumaAllocator<int>(0));
+    for (int i = 0; i < 1000; ++i) {
+        vec.push_back(i * 2);
+    }
+    ASSERT_EQ(vec.size(), 1000);
+    ASSERT_EQ(vec[500], 1000);
+}
+
+TEST_CASE(core_warmup_and_spin_pause) {
+    affix::warmup_core(std::chrono::milliseconds(2));
+    affix::spin_pause(100);
+    affix::this_thread::warmup(std::chrono::milliseconds(1));
+    ASSERT_TRUE(true);
+}
+
+TEST_CASE(placement_advisor_evaluation) {
+    std::vector<affix::Policy> policies = {
+        affix::Policy::unrestricted(),
+        affix::Policy::pinned(0),
+        affix::Policy::performance_cores()
+    };
+
+    auto work = []() {
+        volatile double x = 1.0;
+        for (int i = 0; i < 10'000; ++i) {
+            x = x * 1.0001 + 0.001;
+        }
+    };
+
+    auto report = affix::evaluate_placement(work, policies, 10, 2);
+    ASSERT_EQ(report.evaluations.size(), 3);
+    ASSERT_FALSE(report.recommendation.empty());
+    ASSERT_FALSE(report.summary().empty());
+    ASSERT_FALSE(report.to_json().empty());
+}
+
+int main() {
+    return test::run_all_tests();
+}
