@@ -80,3 +80,48 @@ void run_advisor_cmd(size_t iterations, bool json) {
     }
 }
 
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        std::cout << "Affix CLI v" << affix::version() << "\n";
+        std::cout << "Usage:\n";
+        std::cout << "  affix-cli topology [--json]       Inspect CPU topology, NUMA, and caches\n";
+        std::cout << "  affix-cli bench [--core N]       Benchmark unpinned vs pinned latency\n";
+        std::cout << "  affix-cli advise [--iters N]      Run automated placement advisor trial\n";
+        return 0;
+    }
+
+    std::string cmd = argv[1];
+    if (cmd == "topology") {
+        bool json = (argc >= 3 && std::string(argv[2]) == "--json");
+        run_topology_cmd(json);
+    } else if (cmd == "bench") {
+        uint32_t core = 0;
+        size_t iters = 50;
+        for (int i = 2; i < argc; ++i) {
+            std::string arg = argv[i];
+            if (arg == "--core" && i + 1 < argc) {
+                core = static_cast<uint32_t>(std::stoul(argv[++i]));
+            } else if (arg == "--iters" && i + 1 < argc) {
+                iters = std::stoul(argv[++i]);
+            }
+        }
+        run_benchmark_cmd(core, iters);
+    } else if (cmd == "advise") {
+        size_t iters = 30;
+        bool json = false;
+        for (int i = 2; i < argc; ++i) {
+            std::string arg = argv[i];
+            if (arg == "--iters" && i + 1 < argc) {
+                iters = std::stoul(argv[++i]);
+            } else if (arg == "--json") {
+                json = true;
+            }
+        }
+        run_advisor_cmd(iters, json);
+    } else {
+        std::cerr << "Unknown command: " << cmd << "\n";
+        return 1;
+    }
+
+    return 0;
+}
