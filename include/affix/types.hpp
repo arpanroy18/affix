@@ -123,7 +123,7 @@ public:
             // Trim token
             size_t first = token.find_first_not_of(" \t\r\n");
             if (first == std::string::npos) continue;
-            size_t last = token.find_last_not_of(" \t");
+            size_t last = token.find_last_not_of(" \t\r\n");
             std::string item = token.substr(first, last - first + 1);
 
             size_t dash = item.find('-');
