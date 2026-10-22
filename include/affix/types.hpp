@@ -130,8 +130,10 @@ public:
             if (dash != std::string::npos) {
                 size_t start = std::stoul(item.substr(0, dash));
                 size_t end = std::stoul(item.substr(dash + 1));
-                for (size_t i = start; i <= end; ++i) {
-                    set.set(i);
+                if (start <= end) {
+                    for (size_t i = start; i <= end; ++i) {
+                        set.set(i);
+                    }
                 }
             } else if (!item.empty()) {
                 set.set(std::stoul(item));
