@@ -136,11 +136,11 @@ public:
         return p;
     }
 
-    PolicyType type() const { return type_; }
-    uint32_t target_id() const { return target_id_; }
-    const CpuSet& explicit_cpu_set() const { return cpu_set_; }
-    SchedPriority sched_priority() const { return sched_priority_; }
-    int priority_value() const { return priority_value_; }
+    [[nodiscard]] PolicyType type() const { return type_; }
+    [[nodiscard]] uint32_t target_id() const { return target_id_; }
+    [[nodiscard]] const CpuSet& explicit_cpu_set() const { return cpu_set_; }
+    [[nodiscard]] SchedPriority sched_priority() const { return sched_priority_; }
+    [[nodiscard]] int priority_value() const { return priority_value_; }
 
     CpuSet resolve(const SystemTopology& topology) const {
         CpuSet allowed = topology.allowed_cpus();
