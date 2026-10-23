@@ -119,24 +119,34 @@ public:
         CpuSet set;
         std::istringstream ss(str);
         std::string token;
+        auto parse_number = [](const std::string& text, size_t& out) {
+            try {
+                out = std::stoul(text);
+                return true;
+            } catch (...) {
+                return false;
+            }
+        };
         while (std::getline(ss, token, ',')) {
-            // Trim token
             size_t first = token.find_first_not_of(" \t\r\n");
             if (first == std::string::npos) continue;
             size_t last = token.find_last_not_of(" \t\r\n");
             std::string item = token.substr(first, last - first + 1);
 
             size_t dash = item.find('-');
+            size_t start = 0;
+            size_t end = 0;
             if (dash != std::string::npos) {
-                size_t start = std::stoul(item.substr(0, dash));
-                size_t end = std::stoul(item.substr(dash + 1));
-                if (start <= end) {
-                    for (size_t i = start; i <= end; ++i) {
-                        set.set(i);
-                    }
+                if (!parse_number(item.substr(0, dash), start) ||
+                    !parse_number(item.substr(dash + 1), end)) {
+                    continue;
                 }
-            } else if (!item.empty()) {
-                set.set(std::stoul(item));
+                if (start > end) continue;
+                for (size_t i = start; i <= end; ++i) {
+                    set.set(i);
+                }
+            } else if (parse_number(item, start)) {
+                set.set(start);
             }
         }
         return set;
