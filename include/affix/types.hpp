@@ -121,7 +121,7 @@ public:
         std::string token;
         while (std::getline(ss, token, ',')) {
             // Trim token
-            size_t first = token.find_first_not_of(" \t");
+            size_t first = token.find_first_not_of(" \t\r\n");
             if (first == std::string::npos) continue;
             size_t last = token.find_last_not_of(" \t");
             std::string item = token.substr(first, last - first + 1);
