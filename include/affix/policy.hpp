@@ -142,7 +142,7 @@ public:
     [[nodiscard]] SchedPriority sched_priority() const { return sched_priority_; }
     [[nodiscard]] int priority_value() const { return priority_value_; }
 
-    CpuSet resolve(const SystemTopology& topology) const {
+    [[nodiscard]] CpuSet resolve(const SystemTopology& topology) const {
         CpuSet allowed = topology.allowed_cpus();
         if (allowed.empty()) {
             allowed = topology.all_cpus();
