@@ -65,7 +65,7 @@ public:
         return bits_.none();
     }
 
-    size_t count() const {
+    [[nodiscard]] size_t count() const {
         return bits_.count();
     }
 
