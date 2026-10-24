@@ -15,10 +15,10 @@ struct CacheInfo {
 };
 
 struct CpuCore {
-    uint32_t logical_id = INVALID_CORE_ID;
-    uint32_t physical_id = INVALID_CORE_ID;
+    uint32_t logical_id = kInvalidCoreId;
+    uint32_t physical_id = kInvalidCoreId;
     uint32_t package_id = 0;
-    NumaId numa_node = INVALID_NUMA_ID;
+    NumaId numa_node = kInvalidNumaId;
     CoreType core_type = CoreType::Standard;
     bool is_isolated = false;
     CpuSet smt_siblings;
@@ -26,7 +26,7 @@ struct CpuCore {
 };
 
 struct NumaNode {
-    NumaId id = INVALID_NUMA_ID;
+    NumaId id = kInvalidNumaId;
     uint64_t total_memory_bytes = 0;
     CpuSet cpus;
 };

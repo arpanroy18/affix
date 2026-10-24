@@ -11,8 +11,8 @@
 namespace affix {
 
 constexpr size_t MAX_CPUS = 1024;
-constexpr uint32_t INVALID_CORE_ID = 0xFFFFFFFF;
-constexpr int32_t INVALID_NUMA_ID = -1;
+constexpr uint32_t kInvalidCoreId = 0xFFFFFFFF;
+constexpr int32_t kInvalidNumaId = -1;
 using NumaId = int32_t;
 
 enum class CoreType {
