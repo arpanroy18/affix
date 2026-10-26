@@ -45,8 +45,8 @@ public:
     const std::vector<CpuCore>& cores() const { return cores_; }
     const std::vector<NumaNode>& numa_nodes() const { return numa_nodes_; }
 
-    const CpuCore* get_core(uint32_t logical_id) const;
-    const NumaNode* get_numa_node(NumaId id) const;
+    [[nodiscard]] const CpuCore* get_core(uint32_t logical_id) const;
+    [[nodiscard]] const NumaNode* get_numa_node(NumaId id) const;
 
     CpuSet allowed_cpus() const { return allowed_cpus_; }
     CpuSet isolated_cpus() const { return isolated_cpus_; }
