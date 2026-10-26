@@ -33,8 +33,8 @@ public:
     ScopedPlacement(ScopedPlacement&& other) noexcept;
     ScopedPlacement& operator=(ScopedPlacement&& other) noexcept;
 
-    const PlacementResult& result() const { return result_; }
-    bool applied() const { return result_.applied; }
+    [[nodiscard]] const PlacementResult& result() const { return result_; }
+    [[nodiscard]] bool applied() const { return result_.applied; }
 
 private:
     PlacementResult result_;
