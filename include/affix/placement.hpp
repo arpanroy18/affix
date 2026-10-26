@@ -15,7 +15,7 @@ struct PlacementResult {
     std::string error_message;
     std::string priority_message;
 
-    explicit operator bool() const { return applied; }
+    [[nodiscard]] explicit operator bool() const { return applied; }
 };
 
 PlacementResult apply_placement(std::thread& thread, const Policy& policy);
