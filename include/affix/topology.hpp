@@ -73,7 +73,7 @@ private:
     CpuSet isolated_cpus_;
 };
 
-inline const SystemTopology& get_system_topology() {
+[[nodiscard]] inline const SystemTopology& get_system_topology() {
     return SystemTopology::instance();
 }
 
