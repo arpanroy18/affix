@@ -44,7 +44,7 @@ public:
         }
     }
 
-    NumaId numa_node() const noexcept { return numa_node_; }
+    [[nodiscard]] NumaId numa_node() const noexcept { return numa_node_; }
 
     template <typename U>
     bool operator==(const NumaAllocator<U>& other) const noexcept {
