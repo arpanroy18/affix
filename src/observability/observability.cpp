@@ -168,7 +168,12 @@ std::string TelemetrySession::to_json() const {
     std::ostringstream ss;
     ss << std::fixed << std::setprecision(3);
     ss << "{\n";
-    ss << "  \"name\": \"" << name_ << "\",\n";
+    std::string escaped;
+    for (char ch : name_) {
+        if (ch == '"' || ch == '\\') escaped += '_';
+        else escaped += ch;
+    }
+    ss << "  \"name\": \"" << escaped << "\",\n";
     ss << "  \"sample_count\": " << stats.sample_count << ",\n";
     ss << "  \"latency_ms\": {\n";
     ss << "    \"min\": " << stats.min_ms << ",\n";
