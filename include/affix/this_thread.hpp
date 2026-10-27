@@ -9,9 +9,9 @@
 namespace affix::this_thread {
 
 PlacementResult set_placement(const Policy& policy);
-CpuSet get_placement();
-uint32_t get_current_core();
-uint64_t get_id();
+[[nodiscard]] CpuSet get_placement();
+[[nodiscard]] uint32_t get_current_core();
+[[nodiscard]] uint64_t get_id();
 
 bool set_priority(SchedPriority priority, int val = 0, std::string* error_msg = nullptr);
 bool get_priority(SchedPriority& priority, int& val, std::string* error_msg = nullptr);
