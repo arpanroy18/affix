@@ -87,7 +87,7 @@ public:
     ScopedProbe(const ScopedProbe&) = delete;
     ScopedProbe& operator=(const ScopedProbe&) = delete;
 
-    MetricsSnapshot elapsed() const;
+    [[nodiscard]] MetricsSnapshot elapsed() const;
 
 private:
     std::string name_;
