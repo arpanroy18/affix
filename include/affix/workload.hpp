@@ -18,10 +18,10 @@ public:
         policy_ = policy;
     }
 
-    const Policy& policy() const { return policy_; }
-    const std::string& name() const { return name_; }
-    const MetricsSnapshot& last_metrics() const { return last_metrics_; }
-    const TelemetrySession& session() const { return session_; }
+    [[nodiscard]] const Policy& policy() const { return policy_; }
+    [[nodiscard]] const std::string& name() const { return name_; }
+    [[nodiscard]] const MetricsSnapshot& last_metrics() const { return last_metrics_; }
+    [[nodiscard]] const TelemetrySession& session() const { return session_; }
 
     template <typename Func>
     auto run(Func&& func) {
