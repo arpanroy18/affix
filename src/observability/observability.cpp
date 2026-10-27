@@ -117,7 +117,7 @@ LatencyStats TelemetrySession::wall_time_stats() const {
     stats.mean_ms = sum / static_cast<double>(latencies.size());
 
     auto percentile = [&](double p) -> double {
-        size_t idx = static_cast<size_t>(p * static_cast<double>(latencies.size() - 1));
+        size_t idx = static_cast<size_t>(p * static_cast<double>(latencies.size() - 1) + 0.5);
         return latencies[idx];
     };
 
