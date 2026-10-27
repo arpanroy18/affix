@@ -16,6 +16,9 @@ void free(void* ptr, size_t size_bytes);
 template <typename T>
 class NumaAllocator {
 public:
+    template <typename U>
+    using rebind = NumaAllocator<U>;
+
     using value_type = T;
     using size_type = std::size_t;
     using difference_type = std::ptrdiff_t;
