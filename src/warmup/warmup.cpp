@@ -14,6 +14,7 @@ void warmup_core(std::chrono::nanoseconds duration) {
 }
 
 void spin_pause(size_t iterations) {
+    if (iterations == 0) return;
     for (size_t i = 0; i < iterations; ++i) {
 #if defined(__x86_64__) || defined(_M_X64)
         asm volatile("pause" ::: "memory");
