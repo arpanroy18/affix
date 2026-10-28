@@ -1,5 +1,6 @@
 #include "affix/warmup.hpp"
 #include <chrono>
+#include <thread>
 
 namespace affix {
 
