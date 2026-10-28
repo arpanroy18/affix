@@ -11,6 +11,9 @@ AdvisorReport run_evaluations(const std::vector<Policy>& policies,
     AdvisorReport report;
     report.baseline_index = baseline_index;
     report.evaluations.reserve(policies.size());
+    if (sessions.size() != policies.size()) {
+        return report;
+    }
 
     for (size_t i = 0; i < policies.size(); ++i) {
         PolicyEvaluation eval;
