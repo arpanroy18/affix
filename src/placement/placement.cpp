@@ -7,6 +7,16 @@ namespace affix {
 
 namespace {
 
+void restore_thread_state(bool active, const CpuSet& mask, SchedPriority sched, int sched_val) {
+    if (!active) return;
+    if (!mask.empty()) {
+        internal::platform_set_current_thread_affinity(mask, nullptr, nullptr);
+    }
+    if (sched != SchedPriority::Default) {
+        internal::platform_set_current_thread_priority(sched, sched_val, nullptr);
+    }
+}
+
 PlacementResult do_apply_affinity(pthread_t handle, const Policy& policy) {
     PlacementResult res;
     const auto& topo = SystemTopology::instance();
@@ -79,14 +89,7 @@ ScopedPlacement::ScopedPlacement(const Policy& policy) {
 }
 
 ScopedPlacement::~ScopedPlacement() {
-    if (active_) {
-        if (!previous_mask_.empty()) {
-            internal::platform_set_current_thread_affinity(previous_mask_, nullptr, nullptr);
-        }
-        if (previous_sched_ != SchedPriority::Default) {
-            internal::platform_set_current_thread_priority(previous_sched_, previous_priority_val_, nullptr);
-        }
-    }
+    restore_thread_state(active_, previous_mask_, previous_sched_, previous_priority_val_);
 }
 
 ScopedPlacement::ScopedPlacement(ScopedPlacement&& other) noexcept
@@ -100,14 +103,7 @@ ScopedPlacement::ScopedPlacement(ScopedPlacement&& other) noexcept
 
 ScopedPlacement& ScopedPlacement::operator=(ScopedPlacement&& other) noexcept {
     if (this != &other) {
-        if (active_) {
-            if (!previous_mask_.empty()) {
-                internal::platform_set_current_thread_affinity(previous_mask_, nullptr, nullptr);
-            }
-            if (previous_sched_ != SchedPriority::Default) {
-                internal::platform_set_current_thread_priority(previous_sched_, previous_priority_val_, nullptr);
-            }
-        }
+        restore_thread_state(active_, previous_mask_, previous_sched_, previous_priority_val_);
         result_ = std::move(other.result_);
         previous_mask_ = std::move(other.previous_mask_);
         previous_sched_ = other.previous_sched_;
