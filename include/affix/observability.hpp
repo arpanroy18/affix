@@ -114,8 +114,8 @@ public:
     void record(const MetricsSnapshot& snapshot);
     void reset();
 
-    size_t sample_count() const { return samples_.size(); }
-    const std::string& name() const { return name_; }
+    [[nodiscard]] size_t sample_count() const { return samples_.size(); }
+    [[nodiscard]] const std::string& name() const { return name_; }
 
     LatencyStats wall_time_stats() const;
     MetricsSnapshot aggregate_metrics() const;
