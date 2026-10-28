@@ -22,8 +22,8 @@ bool platform_get_thread_priority(pthread_t handle, SchedPriority& priority, int
 bool platform_set_current_thread_priority(SchedPriority priority, int val, std::string* error_msg);
 bool platform_get_current_thread_priority(SchedPriority& priority, int& val, std::string* error_msg);
 
-uint32_t platform_get_current_cpu();
-uint64_t platform_get_current_tid();
+[[nodiscard]] uint32_t platform_get_current_cpu();
+[[nodiscard]] uint64_t platform_get_current_tid();
 
 void platform_discover_topology(SystemTopology& topo);
 
