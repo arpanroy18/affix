@@ -1,9 +1,9 @@
 #include "affix/observability.hpp"
 #include "../platform/platform.hpp"
-#include <sstream>
-#include <iomanip>
 #include <algorithm>
+#include <iomanip>
 #include <numeric>
+#include <sstream>
 
 namespace affix {
 
