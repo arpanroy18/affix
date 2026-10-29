@@ -7,6 +7,7 @@ namespace affix {
 void warmup_core(std::chrono::nanoseconds duration) {
     auto start = std::chrono::steady_clock::now();
     volatile uint64_t counter = 0;
+    (void)counter;
     while (std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() - start) < duration) {
         counter = counter * 1664525ULL + 1013904223ULL;
     }
