@@ -13,7 +13,7 @@
 
 namespace affix {
 
-inline const char* version() {
+[[nodiscard]] inline const char* version() {
     return "0.2.0";
 }
 
