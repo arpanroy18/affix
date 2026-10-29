@@ -4,6 +4,7 @@
 #include <sched.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <cerrno>
 #include <sys/syscall.h>
 #include <sys/resource.h>
 #include <sys/time.h>
