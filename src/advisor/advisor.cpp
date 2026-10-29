@@ -23,6 +23,9 @@ AdvisorReport run_evaluations(const std::vector<Policy>& policies,
         report.evaluations.push_back(eval);
     }
 
+    if (baseline_index >= report.evaluations.size()) {
+        baseline_index = 0;
+    }
     const auto& baseline_latency = report.evaluations[baseline_index].latency;
     const auto& baseline_agg = report.evaluations[baseline_index].aggregate;
 
