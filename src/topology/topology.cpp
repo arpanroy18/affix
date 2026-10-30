@@ -28,7 +28,7 @@ void SystemTopology::add_numa_node(const NumaNode& node) {
 size_t SystemTopology::physical_core_count() const {
     std::set<std::pair<uint32_t, uint32_t>> phys_cores; // (package_id, physical_id)
     for (const auto& c : cores_) {
-        phys_cores.insert({c.package_id, c.physical_id});
+        phys_cores.emplace(c.package_id, c.physical_id);
     }
     return phys_cores.empty() ? cores_.size() : phys_cores.size();
 }
