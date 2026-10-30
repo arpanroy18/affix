@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     std::cout << "System: " << topo.logical_core_count() << " logical CPUs, "
               << topo.physical_core_count() << " physical cores\n\n";
 
-    const size_t N = 120;
+    constexpr size_t kMatrixSize = 120;
     std::vector<double> a(N * N, 1.01);
     std::vector<double> b(N * N, 0.99);
     std::vector<double> c(N * N, 0.0);
