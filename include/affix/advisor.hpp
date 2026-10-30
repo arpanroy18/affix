@@ -39,7 +39,7 @@ namespace internal {
 } // namespace internal
 
 template <typename Func>
-AdvisorReport evaluate_placement(Func&& func,
+[[nodiscard]] AdvisorReport evaluate_placement(Func&& func,
                                  const std::vector<Policy>& policies,
                                  size_t iterations = 30,
                                  size_t warmup_iterations = 5) {
