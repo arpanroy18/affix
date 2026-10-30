@@ -32,7 +32,7 @@ struct AdvisorReport {
 
 namespace internal {
 
-AdvisorReport run_evaluations(const std::vector<Policy>& policies,
+[[nodiscard]] AdvisorReport run_evaluations(const std::vector<Policy>& policies,
                               const std::vector<TelemetrySession>& sessions,
                               size_t baseline_index);
 
