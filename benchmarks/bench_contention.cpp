@@ -28,12 +28,12 @@ int main(int argc, char* argv[]) {
               << topo.physical_core_count() << " physical cores\n\n";
 
     constexpr size_t kMatrixSize = 120;
-    std::vector<double> a(N * N, 1.01);
-    std::vector<double> b(N * N, 0.99);
-    std::vector<double> c(N * N, 0.0);
+    std::vector<double> a(kMatrixSize * kMatrixSize, 1.01);
+    std::vector<double> b(kMatrixSize * kMatrixSize, 0.99);
+    std::vector<double> c(kMatrixSize * kMatrixSize, 0.0);
 
     auto work = [&]() {
-        matrix_multiply(N, a, b, c);
+        matrix_multiply(kMatrixSize, a, b, c);
     };
 
     // 1. Clean run - Unpinned
