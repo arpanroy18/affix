@@ -58,7 +58,8 @@ int main(int argc, char* argv[]) {
     std::atomic<bool> stop_noisy{false};
     std::vector<std::thread> noisy_threads;
     // Spawn 2 noisy neighbor threads that compete for CPU
-    for (int t = 0; t < 2; ++t) {
+    constexpr int kNoisyNeighbors = 2;
+    for (int t = 0; t < kNoisyNeighbors; ++t) {
         noisy_threads.emplace_back([&stop_noisy]() {
             volatile double x = 1.0;
             while (!stop_noisy.load(std::memory_order_relaxed)) {
