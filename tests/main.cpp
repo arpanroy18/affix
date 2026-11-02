@@ -221,6 +221,18 @@ TEST_CASE(cpuset_from_string_adversarial) {
     ASSERT_EQ(parsed.count(), 9);
 }
 
+TEST_CASE(metrics_snapshot_delta_arithmetic) {
+    affix::MetricsSnapshot before;
+    before.wall_time_ns = 100;
+    before.cpu_time_ns = 40;
+    affix::MetricsSnapshot after = before;
+    after.wall_time_ns = 350;
+    after.cpu_time_ns = 190;
+    auto delta = after - before;
+    ASSERT_EQ(delta.wall_time_ns, 250);
+    ASSERT_EQ(delta.cpu_time_ns, 150);
+}
+
 int main() {
     return test::run_all_tests();
 }
