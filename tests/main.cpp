@@ -211,6 +211,16 @@ TEST_CASE(placement_advisor_evaluation) {
     ASSERT_FALSE(report.to_json().empty());
 }
 
+TEST_CASE(cpuset_from_string_adversarial) {
+    auto parsed = affix::CpuSet::from_string("0-2, 4 , 6-8,10,,bogus,3-3");
+    ASSERT_TRUE(parsed.test(0));
+    ASSERT_TRUE(parsed.test(3));
+    ASSERT_TRUE(parsed.test(4));
+    ASSERT_TRUE(parsed.test(6));
+    ASSERT_TRUE(parsed.test(10));
+    ASSERT_EQ(parsed.count(), 9);
+}
+
 int main() {
     return test::run_all_tests();
 }
