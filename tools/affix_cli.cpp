@@ -102,7 +102,10 @@ int main(int argc, char* argv[]) {
         for (int i = 2; i < argc; ++i) {
             std::string arg = argv[i];
             if (arg == "--core" && i + 1 < argc) {
-                core = static_cast<uint32_t>(std::stoul(argv[++i]));
+                ++i;
+                uint32_t parsed_core = 0;
+                auto res = std::from_chars(argv[i], argv[i] + std::strlen(argv[i]), parsed_core);
+                if (res.ec == std::errc{}) core = parsed_core;
             } else if (arg == "--iters" && i + 1 < argc) {
                 iters = std::stoul(argv[++i]);
             }
