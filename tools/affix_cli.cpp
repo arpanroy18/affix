@@ -107,7 +107,10 @@ int main(int argc, char* argv[]) {
                 auto res = std::from_chars(argv[i], argv[i] + std::strlen(argv[i]), parsed_core);
                 if (res.ec == std::errc{}) core = parsed_core;
             } else if (arg == "--iters" && i + 1 < argc) {
-                iters = std::stoul(argv[++i]);
+                ++i;
+                size_t parsed_iters = iters;
+                auto res = std::from_chars(argv[i], argv[i] + std::strlen(argv[i]), parsed_iters);
+                if (res.ec == std::errc{} && parsed_iters > 0) iters = parsed_iters;
             }
         }
         run_benchmark_cmd(core, iters);
@@ -117,7 +120,10 @@ int main(int argc, char* argv[]) {
         for (int i = 2; i < argc; ++i) {
             std::string arg = argv[i];
             if (arg == "--iters" && i + 1 < argc) {
-                iters = std::stoul(argv[++i]);
+                ++i;
+                size_t parsed_iters = iters;
+                auto res = std::from_chars(argv[i], argv[i] + std::strlen(argv[i]), parsed_iters);
+                if (res.ec == std::errc{} && parsed_iters > 0) iters = parsed_iters;
             } else if (arg == "--json") {
                 json = true;
             }
