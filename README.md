@@ -261,3 +261,11 @@ ctest --output-on-failure
 ## License
 
 MIT License.
+
+---
+
+## Benchmarks
+
+`affix-bench` runs the same reduction kernel unpinned, pinned, and pinned to an isolated core while noisy-neighbor threads compete for the machine, then reports P50/P90/P99 wall latency from `TelemetrySession`.
+
+`affix-cli advise` automates the same A/B trial for the standard policies and prints the winning placement policy as text or JSON.
