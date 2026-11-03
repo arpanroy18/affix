@@ -8,7 +8,7 @@
 
 namespace affix::numa {
 
-bool bind_memory(void* ptr, size_t size_bytes, NumaId node, std::string* error_msg = nullptr);
+[[nodiscard]] bool bind_memory(void* ptr, size_t size_bytes, NumaId node, std::string* error_msg = nullptr);
 bool set_thread_preferred(NumaId node, std::string* error_msg = nullptr);
 void* allocate(size_t size_bytes, NumaId node);
 void free(void* ptr, size_t size_bytes);
