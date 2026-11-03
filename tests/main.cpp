@@ -233,6 +233,19 @@ TEST_CASE(metrics_snapshot_delta_arithmetic) {
     ASSERT_EQ(delta.cpu_time_ns, 150);
 }
 
+TEST_CASE(telemetry_session_rebind_allocator_roundtrip) {
+    affix::numa::NumaAllocator<int> alloc(0);
+    affix::numa::NumaAllocator<int>::rebind<double> double_alloc = alloc;
+    (void)double_alloc;
+    affix::TelemetrySession session("roundtrip");
+    affix::MetricsSnapshot snap;
+    snap.wall_time_ns = 42;
+    session.record(snap);
+    ASSERT_EQ(session.sample_count(), 1);
+    auto stats = session.wall_time_stats();
+    ASSERT_EQ(stats.sample_count, 1);
+}
+
 int main() {
     return test::run_all_tests();
 }
