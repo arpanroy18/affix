@@ -4,6 +4,8 @@
 #include <string>
 #include <chrono>
 #include <cmath>
+#include <charconv>
+#include <cstring>
 
 void run_topology_cmd(bool json) {
     const auto& topo = affix::get_system_topology();
