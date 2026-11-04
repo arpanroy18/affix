@@ -253,6 +253,19 @@ TEST_CASE(performance_cores_policy_resolution) {
     ASSERT_FALSE(resolved.empty());
 }
 
+TEST_CASE(telemetry_session_wall_time_stats) {
+    affix::TelemetrySession session("latency_check");
+    for (uint64_t ns : {10'000'000ULL, 20'000'000ULL, 40'000'000ULL}) {
+        affix::MetricsSnapshot snap;
+        snap.wall_time_ns = ns;
+        session.record(snap);
+    }
+    auto stats = session.wall_time_stats();
+    ASSERT_EQ(stats.sample_count, 3);
+    ASSERT_TRUE(stats.min_ms > 0.0);
+    ASSERT_TRUE(stats.max_ms >= stats.min_ms);
+}
+
 int main() {
     return test::run_all_tests();
 }
