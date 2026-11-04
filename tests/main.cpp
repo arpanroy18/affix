@@ -275,6 +275,17 @@ TEST_CASE(placement_policy_to_string_coverage) {
     ASSERT_TRUE(numa.find("NUMA") != std::string::npos);
 }
 
+TEST_CASE(cpuset_union_and_intersection_coverage) {
+    affix::CpuSet a{0, 2, 4};
+    affix::CpuSet b{2, 4, 6};
+    affix::CpuSet uni = a | b;
+    affix::CpuSet inter = a & b;
+    ASSERT_EQ(uni.count(), 4);
+    ASSERT_EQ(inter.count(), 2);
+    ASSERT_TRUE(uni.test(6));
+    ASSERT_FALSE(inter.test(6));
+}
+
 int main() {
     return test::run_all_tests();
 }
