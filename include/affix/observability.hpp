@@ -76,7 +76,7 @@ struct MetricsSnapshot {
     std::string to_json() const;
 };
 
-MetricsSnapshot capture_current_thread_metrics();
+[[nodiscard]] MetricsSnapshot capture_current_thread_metrics();
 
 class ScopedProbe {
 public:
