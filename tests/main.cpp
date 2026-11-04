@@ -266,6 +266,15 @@ TEST_CASE(telemetry_session_wall_time_stats) {
     ASSERT_TRUE(stats.max_ms >= stats.min_ms);
 }
 
+TEST_CASE(placement_policy_to_string_coverage) {
+    auto str = affix::Policy::pinned(3).to_string();
+    ASSERT_TRUE(str.find("Pinned") != std::string::npos);
+    auto perf = affix::Policy::performance_cores().to_string();
+    ASSERT_TRUE(perf.find("PerformanceCores") != std::string::npos);
+    auto numa = affix::Policy::numa_node(1).to_string();
+    ASSERT_TRUE(numa.find("NUMA") != std::string::npos);
+}
+
 int main() {
     return test::run_all_tests();
 }
