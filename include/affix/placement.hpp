@@ -18,10 +18,10 @@ struct PlacementResult {
     [[nodiscard]] explicit operator bool() const { return applied; }
 };
 
-PlacementResult apply_placement(std::thread& thread, const Policy& policy);
-PlacementResult apply_placement(std::jthread& thread, const Policy& policy);
-PlacementResult apply_placement(pthread_t native_handle, const Policy& policy);
-PlacementResult apply_placement_to_thread_id(uint64_t tid, const Policy& policy);
+[[nodiscard]] PlacementResult apply_placement(std::thread& thread, const Policy& policy);
+[[nodiscard]] PlacementResult apply_placement(std::jthread& thread, const Policy& policy);
+[[nodiscard]] PlacementResult apply_placement(pthread_t native_handle, const Policy& policy);
+[[nodiscard]] PlacementResult apply_placement_to_thread_id(uint64_t tid, const Policy& policy);
 
 class ScopedPlacement {
 public:
