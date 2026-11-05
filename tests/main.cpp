@@ -246,6 +246,13 @@ TEST_CASE(telemetry_session_rebind_allocator_roundtrip) {
     ASSERT_EQ(stats.sample_count, 1);
 }
 
+TEST_CASE(performance_cores_policy_resolution) {
+    const auto& topo = affix::get_system_topology();
+    auto policy = affix::Policy::performance_cores();
+    auto resolved = policy.resolve(topo);
+    ASSERT_FALSE(resolved.empty());
+}
+
 int main() {
     return test::run_all_tests();
 }
