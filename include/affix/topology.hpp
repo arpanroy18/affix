@@ -35,7 +35,7 @@ class SystemTopology {
 public:
     SystemTopology() = default;
 
-    static const SystemTopology& instance();
+    [[nodiscard]] static const SystemTopology& instance();
     [[nodiscard]] static SystemTopology discover();
 
     size_t logical_core_count() const { return cores_.size(); }
