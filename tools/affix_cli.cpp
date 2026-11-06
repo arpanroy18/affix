@@ -82,6 +82,8 @@ void run_advisor_cmd(size_t iterations, bool json) {
     }
 }
 
+constexpr int kDefaultBenchIters = 50;
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cout << "Affix CLI v" << affix::version() << "\n";
@@ -98,7 +100,7 @@ int main(int argc, char* argv[]) {
         run_topology_cmd(json);
     } else if (cmd == "bench") {
         uint32_t core = 0;
-        size_t iters = 50;
+        size_t iters = kDefaultBenchIters;
         for (int i = 2; i < argc; ++i) {
             std::string arg = argv[i];
             if (arg == "--core" && i + 1 < argc) {
