@@ -115,7 +115,7 @@ public:
         return ss.str();
     }
 
-    static CpuSet from_string(const std::string& str) {
+    [[nodiscard]] static CpuSet from_string(const std::string& str) {
         CpuSet set;
         std::istringstream ss(str);
         std::string token;
