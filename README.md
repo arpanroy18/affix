@@ -269,3 +269,17 @@ MIT License.
 `affix-bench` runs the same reduction kernel unpinned, pinned, and pinned to an isolated core while noisy-neighbor threads compete for the machine, then reports P50/P90/P99 wall latency from `TelemetrySession`.
 
 `affix-cli advise` automates the same A/B trial for the standard policies and prints the winning placement policy as text or JSON.
+
+---
+
+## Quick Reference
+
+| Command | Purpose |
+| --- | --- |
+| `affix-cli topology [--json]` | Inspect logical CPUs, P/E cores, NUMA nodes |
+| `affix-cli bench --core N --iters M` | Benchmark unpinned vs pinned latency |
+| `affix-cli advise --iters M [--json]` | Run the automated placement advisor |
+
+## Guard Rails
+
+Wrap a critical section in `affix::ScopedPlacement` (RAII) to pin the calling thread for the duration of the block and automatically restore the previous affinity on scope exit.
