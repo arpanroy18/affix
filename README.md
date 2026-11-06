@@ -283,3 +283,11 @@ MIT License.
 ## Guard Rails
 
 Wrap a critical section in `affix::ScopedPlacement` (RAII) to pin the calling thread for the duration of the block and automatically restore the previous affinity on scope exit.
+
+---
+
+## Architecture
+
+- Public API headers live in `include/affix/` and stay free of OS-specific types.
+- Platform shims (`src/platform/platform_*.cpp`) implement affinity, priority, topology and PMU access behind that header.
+- `affix::ScopedPlacement` is the only entry point that mutates thread state; restore semantics vive on scope exit.
