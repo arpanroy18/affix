@@ -36,7 +36,7 @@ public:
     SystemTopology() = default;
 
     static const SystemTopology& instance();
-    static SystemTopology discover();
+    [[nodiscard]] static SystemTopology discover();
 
     size_t logical_core_count() const { return cores_.size(); }
     size_t physical_core_count() const;
