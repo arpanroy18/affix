@@ -116,15 +116,15 @@ LatencyStats TelemetrySession::wall_time_stats() const {
     stats.max_ms = latencies.back();
     stats.mean_ms = sum / static_cast<double>(latencies.size());
 
-    auto percentile = [&](double p) -> double {
+    auto percentile_at = [&](double p) -> double {
         size_t idx = static_cast<size_t>(p * static_cast<double>(latencies.size() - 1) + 0.5);
         return latencies[idx];
     };
 
-    stats.p50_ms = percentile(0.50);
-    stats.p90_ms = percentile(0.90);
-    stats.p95_ms = percentile(0.95);
-    stats.p99_ms = percentile(0.99);
+    stats.p50_ms = percentile_at(0.50);
+    stats.p90_ms = percentile_at(0.90);
+    stats.p95_ms = percentile_at(0.95);
+    stats.p99_ms = percentile_at(0.99);
 
     return stats;
 }
