@@ -286,6 +286,14 @@ TEST_CASE(cpuset_union_and_intersection_coverage) {
     ASSERT_FALSE(inter.test(6));
 }
 
+TEST_CASE(pinned_policy_resolves_to_single_core) {
+    const auto& topo = affix::get_system_topology();
+    auto policy = affix::Policy::pinned(0);
+    auto resolved = policy.resolve(topo);
+    ASSERT_EQ(resolved.count(), 1);
+    ASSERT_TRUE(resolved.test(0));
+}
+
 int main() {
     return test::run_all_tests();
 }
