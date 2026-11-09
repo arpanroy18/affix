@@ -35,7 +35,7 @@ Add Affix to your project's `CMakeLists.txt` in seconds:
 include(FetchContent)
 FetchContent_Declare(
     affix
-    GIT_REPOSITORY https://github.com/your-org/affix.git
+    GIT_REPOSITORY https://github.com/arpanroy18/affix.git
     GIT_TAG        v0.2.0
 )
 FetchContent_MakeAvailable(affix)
